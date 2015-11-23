@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.artiomnist.hometracker" >
 
+    <!-- Screen Support -->
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="false"
+        android:xlargeScreens="true" />
+
+    <!-- Main Application Manifest-->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/launcher_icon"

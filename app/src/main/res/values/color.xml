@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This File defines the Colour Scheme for the Application -->
+
+    <color name="primary">#1A659E</color>
+    <color name="primary_dark">#004E89</color>
+    <color name="accent">#FF6B35</color>
+    <color name="background_light">#DDE2DC</color>
+    <color name="text_dark">#323331</color>
+
+</resources>
