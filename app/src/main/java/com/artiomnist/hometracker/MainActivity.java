@@ -1,16 +1,40 @@
 package com.artiomnist.hometracker;
 
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class MainActivity extends AppCompatActivity
+        implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
+
+    private MapController mapC = new MapController();
+    private GoogleMap map = mapC.getMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MapFragment mf = (MapFragment) getFragmentManager().findFragmentById(R.id.MainMapID);
+        mapC.setUpMapIfNull(this.getFragmentManager());
+        map = mapC.getMap();
+
+        mf.getMapAsync(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -33,5 +57,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapLoaded() {
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
+        spinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.setOnMapLoadedCallback(this);
     }
 }
