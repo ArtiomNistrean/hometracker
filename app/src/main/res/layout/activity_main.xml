@@ -9,6 +9,7 @@
     android:layout_height="match_parent"
     android:id="@+id/mapLayoutID">
 
+    <!-- Fragment that is responsible for containing the Google Map Service. -->
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +17,7 @@
         android:id="@+id/MainMapID"
         tools:layout="@layout/activity_main" />
 
+    <!-- Large Progress Bar which indicates loading. -->
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"

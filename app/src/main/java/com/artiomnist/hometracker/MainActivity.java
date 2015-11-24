@@ -1,6 +1,5 @@
 package com.artiomnist.hometracker;
 
-import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,8 +10,6 @@ import android.widget.ProgressBar;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
@@ -25,16 +22,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MapFragment mf = (MapFragment) getFragmentManager().findFragmentById(R.id.MainMapID);
-        mapC.setUpMapIfNull(this.getFragmentManager());
+        mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
         map = mapC.getMap();
 
-        mf.getMapAsync(this);
+        MapFragment mf = (MapFragment) getFragmentManager().findFragmentById(R.id.MainMapID);
+        mf.getMapAsync(this); // calls onMapReady when Loaded
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
+        map = mapC.getMap();
     }
 
     @Override
@@ -59,12 +58,23 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method specifies what functionality to occur when the Map is layout ready and done. Cannot
+     * happen before. The ProgressBar is set to disappear. 
+     *
+     */
     @Override
     public void onMapLoaded() {
         ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
         spinner.setVisibility(View.GONE);
     }
 
+    /**
+     * This Method represents the map being loaded but not laid out yet.
+     * Once the layout is done, OnMapLoaded is Called to Handle loaded logic.
+     *
+     * @param map the map instance.
+     */
     @Override
     public void onMapReady(GoogleMap map) {
         map.setOnMapLoadedCallback(this);
