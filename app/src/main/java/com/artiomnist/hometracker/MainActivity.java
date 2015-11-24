@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Method specifies what functionality to occur when the Map is layout ready and done. Cannot
-     * happen before. The ProgressBar is set to disappear. 
+     * happen before. The ProgressBar is set to disappear.
      *
      */
     @Override
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * This Method represents the map being loaded but not laid out yet.
-     * Once the layout is done, OnMapLoaded is Called to Handle loaded logic.
+     * Once the layout is done, {@link #onMapLoaded()} is called to handle loaded functionality.
      *
      * @param map the map instance.
      */
