@@ -7,8 +7,9 @@
         android:title="Home Location"
         android:summary="Define the shown Home Location"
         android:dialogTitle="Home Location"
-        android:dialogMessage="Set a home location..."
+        android:dialogMessage="Set a home location. This can be An Address, Postcode or a Location. E.g. The Kremlin, Or EX4 4QJ"
         android:defaultValue="University of Exeter" />
+    <!-- TODO Make defaultValue null and introduce initial Screen -->
 
     <ListPreference
         android:key="map_type"
@@ -25,5 +26,11 @@
         android:defaultValue="14"
         android:entries="@array/zoom_levels"
         android:entryValues="@array/zoom_levels_values" />
+
+    <CheckBoxPreference
+        android:key="enable_buildings"
+        android:title="Enable Buildings"
+        android:summary="Enable the drawing of buildings when possible"
+        android:defaultValue="false" />
 
 </PreferenceScreen>

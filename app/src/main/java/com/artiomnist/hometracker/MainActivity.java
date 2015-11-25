@@ -12,18 +12,23 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+// TODO REFINE COMMENTS
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
 
-    private MapController mapC = new MapController();
-    private GoogleMap map = mapC.getMap();
+    private MapController mapC;
+    private GoogleMap map;
+    public static boolean refreshDisplay = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mapC = new MapController(this);
+        map = mapC.getMapModel().getMap();
 
         mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
-        map = mapC.getMap();
+        map = mapC.getMapModel().getMap();
 
         MapFragment mf = (MapFragment) getFragmentManager().findFragmentById(R.id.MainMapID);
         mf.getMapAsync(this); // calls onMapReady when Loaded
@@ -32,9 +37,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         super.onResume();
-        mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
-        map = mapC.getMap();
+        if (refreshDisplay) {
+            mapC.refreshMap();
+            refreshDisplay = false;
+        } else {
+            mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
+            map = mapC.getMapModel().getMap();
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,4 +95,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap map) {
         map.setOnMapLoadedCallback(this);
     }
+
 }

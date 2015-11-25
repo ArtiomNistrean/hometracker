@@ -1,6 +1,9 @@
 package com.artiomnist.hometracker;
 
 import android.app.FragmentManager;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 
@@ -10,6 +13,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * Created on 24/11/2015.
  * @author www.artiomnist.com
@@ -18,7 +24,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class MapController {
 
-    private GoogleMap map = null;
+    private GoogleMap map;
+    private MapModel model;
+    private Geocoder geocoder;
+
+    public MapController(Context context) {
+        model = new MapModel(context);
+        geocoder = new Geocoder(context);
+        map = model.getMap();
+    }
 
     /**
      * Initialises the map if it is possible to initialise. (Google Play Services APK must be
@@ -39,7 +53,6 @@ public class MapController {
      */
     public void setUpMapIfNull(FragmentManager fragmentManager) {
 
-
         if (map == null) {
             // Attempt to get the map.
             map = ((MapFragment) fragmentManager.findFragmentById(R.id.MainMapID)).getMap();
@@ -59,16 +72,43 @@ public class MapController {
      *
      */
     public void setUpMap() {
-        map.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("Marker"));
+        //map.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("Marker"));
+        setHomeLocation();
     }
 
-    /**
-     * Method returns the Map.
-     *
-     * @return GoogleMap the instance of the Map.
-     */
-    public GoogleMap getMap() {
-        return map;
+    public void refreshMap() {
+        map.clear();
+        setUpMap();
+    }
+
+//    TODO CLEAN THIS THE FUCK UP
+    private void setHomeLocation() {
+        // get the home string
+        String location = model.getHome();
+
+        if (location.equals("") || location.isEmpty()) {
+            location = "University of Exeter";
+        }
+
+        List<Address> addressBook = null;
+        try {
+            // get the List<Addresses>
+           addressBook  =  geocoder.getFromLocationName(location, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Get the First and Only Address
+        Address homeLocation = addressBook.get(0);
+        // Get the Lat and Long Co-ords
+        LatLng coords = new LatLng(homeLocation.getLatitude(), homeLocation.getLongitude());
+
+        // Add the Marker
+        map.addMarker(new MarkerOptions().position(coords).title("Home"));
+    }
+
+    public MapModel getMapModel() {
+        return model;
     }
 
 }

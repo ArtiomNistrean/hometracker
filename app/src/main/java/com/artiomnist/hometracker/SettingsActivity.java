@@ -4,6 +4,10 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
+
+// TODO COMMENTS!
 
 /**
  * This preference activity has in its manifest declaration an intent filter for
@@ -20,8 +24,6 @@ public class SettingsActivity extends PreferenceActivity
         // Loads the XML preferences file.
         addPreferencesFromResource(R.xml.preferences);
     }
-
-    
 
     @Override
     protected void onResume() {
@@ -48,5 +50,11 @@ public class SettingsActivity extends PreferenceActivity
         // Sets refreshDisplay to true so that when the user returns to the main
         // activity, the display refreshes to reflect the new settings.
         // TODO
+        if (sharedPreferences.getString("home_address", "University of Exeter").equals("") || sharedPreferences.getString("home_address", "University of Exeter").isEmpty()) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("home_address", "University of Exeter");
+            editor.commit();
+        }
+        MainActivity.refreshDisplay = true;
     }
 }

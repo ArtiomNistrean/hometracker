@@ -12,6 +12,6 @@
     <color name="text_dark">#323331</color>
     <color name="text_light">#FFFFFF</color>
     <color name="text_title">#DAE2DC</color>
-
+    <color name="grey">#ccc</color>
 
 </resources>
