@@ -1,5 +1,6 @@
 package com.artiomnist.hometracker;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.location.Address;
@@ -27,6 +28,7 @@ public class MapController {
     private GoogleMap map;
     private MapModel model;
     private Geocoder geocoder;
+    private boolean validLocation;
 
     public MapController(Context context) {
         model = new MapModel(context);
@@ -74,6 +76,7 @@ public class MapController {
     public void setUpMap() {
         //map.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("Marker"));
         setHomeLocation();
+        // Zoom and Stuff
     }
 
     public void refreshMap() {
@@ -83,28 +86,46 @@ public class MapController {
 
 //    TODO CLEAN THIS THE FUCK UP
     private void setHomeLocation() {
-        // get the home string
-        String location = model.getHome();
+        if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+            // get the home string
+            String location = model.getHome();
 
-        if (location.equals("") || location.isEmpty()) {
-            location = "University of Exeter";
+            if (location.equals("") || location.isEmpty()) {
+                location = "University of Exeter";
+            }
+
+            List<Address> addressBook = null;
+            try {
+                // get the List<Addresses>
+                addressBook = geocoder.getFromLocationName(location, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Check to see if any address where found.
+            if (addressBook.isEmpty()) {
+                validLocation = false;
+                // Tell user that they have entered an invalid location
+
+            } else {
+                // Get the First and Only Address
+                validLocation = true;
+                Address homeLocation = addressBook.get(0);
+
+                // Get the Lat and Long Co-ords
+                LatLng coords = new LatLng(homeLocation.getLatitude(), homeLocation.getLongitude());
+
+                // Add the Marker
+                map.addMarker(new MarkerOptions().position(coords).title("Home"));
+            }
+        } else {
+            // SHOW ERROR
+            System.out.println("SHOW THE ERROR PAGE");
         }
+    }
 
-        List<Address> addressBook = null;
-        try {
-            // get the List<Addresses>
-           addressBook  =  geocoder.getFromLocationName(location, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Get the First and Only Address
-        Address homeLocation = addressBook.get(0);
-        // Get the Lat and Long Co-ords
-        LatLng coords = new LatLng(homeLocation.getLatitude(), homeLocation.getLongitude());
-
-        // Add the Marker
-        map.addMarker(new MarkerOptions().position(coords).title("Home"));
+    public boolean getLocationError() {
+        return validLocation;
     }
 
     public MapModel getMapModel() {
