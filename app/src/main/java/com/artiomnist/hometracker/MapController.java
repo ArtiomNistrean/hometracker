@@ -1,15 +1,14 @@
 package com.artiomnist.hometracker;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -41,7 +40,7 @@ public class MapController {
      * correctly) This is only done if the map has not already been instantiated. This ensures that
      * only one instance of {@link #setUpMap()}. This is done when {@link #map} is not null.
      *
-     * If it isn't installed {@link MapFragment} (and
+     * If it isn't installed {@link SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
      * install/update the Google Play services APK on their device.
      *
@@ -57,7 +56,7 @@ public class MapController {
 
         if (map == null) {
             // Attempt to get the map.
-            map = ((MapFragment) fragmentManager.findFragmentById(R.id.MainMapID)).getMap();
+            map = ((SupportMapFragment) fragmentManager.findFragmentById(R.id.MainMapID)).getMap();
 
             // Checking if successful in obtaining the map.
             if (map != null) {
@@ -119,7 +118,7 @@ public class MapController {
                 map.addMarker(new MarkerOptions().position(coords).title("Home"));
             }
         } else {
-            // SHOW NETWORK ERROR
+            // SHOW NE TODO
         }
     }
 

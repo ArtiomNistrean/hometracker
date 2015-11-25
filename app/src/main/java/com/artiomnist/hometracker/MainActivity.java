@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 // TODO REFINE COMMENTS
@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapC = new MapController(this);
         map = mapC.getMapModel().getMap();
 
-        mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
+        mapC.setUpMapIfNull(this.getSupportFragmentManager()); // Creates the Map + Updates map variable
         map = mapC.getMapModel().getMap();
 
 
-        MapFragment mf = (MapFragment) getFragmentManager().findFragmentById(R.id.MainMapID);
+        SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
         mf.getMapAsync(this); // calls onMapReady when Loaded
     }
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapC.refreshMap();
             refreshDisplay = false;
         } else {
-            mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
+            mapC.setUpMapIfNull(this.getSupportFragmentManager()); // Creates the Map + Updates map variable
             map = mapC.getMapModel().getMap();
         }
         if (!(wifiConnected || mobileConnected)) {
@@ -120,6 +120,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         "file:///android_asset/Misc/help.html");
                 startActivity(i);
                 return true;
+
+            case R.id.refresh:
+                updateConnectedFlags();
+                if (wifiConnected || mobileConnected) {
+                    getFragmentManager().popBackStack();
+                    SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
+                    mf.getMapAsync(this); // calls onMapReady when Loaded
+                } else {
+                    showConnectionError();
+                }
+                mapC.refreshMap();
+
+
+
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -133,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapLoaded() {
         ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
-        spinner.setVisibility(View.GONE);
+        spinner.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -184,8 +200,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void showConnectionError() {
 
+        getFragmentManager().popBackStack();
         WebViewFragment wvf = ConnectionErrorFragment.newInstance("file:///android_asset/Misc/error-connection.html");
-        getFragmentManager().beginTransaction().replace(R.id.MainMapID, wvf).commit();
+        getFragmentManager().beginTransaction().replace(R.id.MainMapID, wvf).addToBackStack("null").commit();
 
     }
 
