@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewFragment;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         super.onResume();
+
         if (refreshDisplay) {
             mapC.refreshMap();
             refreshDisplay = false;
@@ -85,9 +88,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapC.setUpMapIfNull(this.getFragmentManager()); // Creates the Map + Updates map variable
             map = mapC.getMapModel().getMap();
         }
-        if (!mapC.getLocationError()) {
+        if (!(wifiConnected || mobileConnected)) {
+            showConnectionError();
+        } else if (!mapC.getLocationError()) {
             showLocationAlert();
-            System.out.println("No Valid Location Please select a Valid location 2");
         }
     }
 
@@ -163,21 +167,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         builder.setMessage("ERROR MESAGE").setTitle("ERROR TITIES");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // TODO OR SECOND DIALOG?
+                // TODO OR SECOND DIALOG?>
                 Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
                 startActivity(settingsActivity);
             }
         });
         builder.setNegativeButton("FUCK OFF", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog and as a result FUCKS right off.
+                // User cancelled the dialog
             }
         });
         builder.create().show();
     }
 
     public void showConnectionError() {
+//        System.out.println("MuST SHOW CONNECTION ERROR");
+        WebViewFragment wvf = ErrorActivity.newInstance("file:///android_asset/Misc/error-connection.html");
+        getFragmentManager().beginTransaction().replace(R.id.MainMapID, wvf).commit();
 
+        //setContentView(R.layout.activity_main);
+
+        // The specified network connection is not available. Displays error message.
+        //WebView myWebView = (WebView) findViewById(R.id.webview);
+        //myWebView.loadData();
     }
 
 

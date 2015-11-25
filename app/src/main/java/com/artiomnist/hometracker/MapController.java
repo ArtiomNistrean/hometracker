@@ -119,8 +119,7 @@ public class MapController {
                 map.addMarker(new MarkerOptions().position(coords).title("Home"));
             }
         } else {
-            // SHOW ERROR
-            System.out.println("SHOW THE ERROR PAGE");
+            // SHOW NETWORK ERROR
         }
     }
 
