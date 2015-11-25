@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
 
         switch (id) {
             case R.id.settings:
@@ -123,12 +124,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             case R.id.refresh:
                 updateConnectedFlags();
+
                 if (wifiConnected || mobileConnected) {
+                    spinner.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack();
                     SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
                     mf.getMapAsync(this); // calls onMapReady when Loaded
                 } else {
+                    spinner.setVisibility(View.VISIBLE);
                     showConnectionError();
+                    spinner.setVisibility(View.INVISIBLE);
                 }
                 mapC.refreshMap();
 
