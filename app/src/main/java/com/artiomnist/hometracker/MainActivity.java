@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.webkit.WebViewFragment;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         super.onResume();
-
+        updateConnectedFlags();
         if (refreshDisplay) {
             mapC.refreshMap();
             refreshDisplay = false;
@@ -117,6 +116,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
 
             case R.id.about:
+                Intent i = new Intent(this, AboutActivity.class).putExtra(AboutActivity.EXTRA_FILE,
+                        "file:///android_asset/Misc/help.html");
+                startActivity(i);
                 return true;
         }
 
@@ -181,51 +183,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void showConnectionError() {
-//        System.out.println("MuST SHOW CONNECTION ERROR");
-        WebViewFragment wvf = ErrorActivity.newInstance("file:///android_asset/Misc/error-connection.html");
+
+        WebViewFragment wvf = ConnectionErrorFragment.newInstance("file:///android_asset/Misc/error-connection.html");
         getFragmentManager().beginTransaction().replace(R.id.MainMapID, wvf).commit();
 
-        //setContentView(R.layout.activity_main);
-
-        // The specified network connection is not available. Displays error message.
-        //WebView myWebView = (WebView) findViewById(R.id.webview);
-        //myWebView.loadData();
-    }
-
-
-    /**
-     *
-     * This BroadcastReceiver intercepts the android.net.ConnectivityManager.CONNECTIVITY_ACTION,
-     * which indicates a connection change. It checks whether the type is TYPE_WIFI.
-     * If it is, it checks whether Wi-Fi is connected and sets the wifiConnected flag in the
-     * main activity accordingly.
-     *
-     */
-    public class NetworkReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
-            // Checks the user prefs and the network connection. Based on the result, decides
-            // whether
-            // to refresh the display or keep the current display.
-            // If the setting is ANY network and there is a network connection
-            // (which by process of elimination would be mobile), sets refreshDisplay to true.
-            if (networkInfo != null) {
-                Toast.makeText(context, R.string.reconnected, Toast.LENGTH_SHORT).show();
-                // Otherwise, the app can't download content--either because there is no network
-                // connection (mobile or Wi-Fi), or because the pref setting is WIFI, and there
-                refreshDisplay = true;
-
-
-            } else {
-                refreshDisplay = false;
-                Toast.makeText(context, R.string.lost_connection, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
 }

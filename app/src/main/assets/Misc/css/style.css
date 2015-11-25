@@ -37,7 +37,7 @@ p {
 }
 
 .divider {
-	margin-top: 160px;
+	margin-top: 40px;
 }
 
 .background {
@@ -62,6 +62,10 @@ p {
 
 .app_icon {
 	margin: auto;
+}
+
+#link {
+	color: #FF6B35;
 }
 
 
