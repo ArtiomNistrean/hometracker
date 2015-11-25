@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- TODO -->
+
+    <EditTextPreference
+        android:key="home_address"
+        android:title="Home Location"
+        android:summary="Define the shown Home Location"
+        android:dialogTitle="Home Location"
+        android:dialogMessage="Set a home location..."
+        android:defaultValue="University of Exeter" />
+
+    <ListPreference
+        android:key="map_type"
+        android:title="Map Style"
+        android:summary="Set the style of the Google map shown"
+        android:defaultValue="Normal"
+        android:entries="@array/map_types"
+        android:entryValues="@array/map_types_values" />
+
+    <ListPreference
+        android:key="zoom_level"
+        android:title="Zoom Level"
+        android:summary="Define the Start up Zoom level of the Map"
+        android:defaultValue="14"
+        android:entries="@array/zoom_levels"
+        android:entryValues="@array/zoom_levels_values" />
+
 </PreferenceScreen>

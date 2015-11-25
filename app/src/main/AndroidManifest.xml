@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.artiomnist.hometracker" >
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.artiomnist.hometracker"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="15"
+        android:targetSdkVersion="23" />
+
+
 
     <!-- Screen Support -->
     <supports-screens
@@ -47,6 +55,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="SettingsActivity" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+
     </application>
 
 </manifest>
