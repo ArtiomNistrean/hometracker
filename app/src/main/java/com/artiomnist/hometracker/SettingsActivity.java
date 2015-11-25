@@ -17,10 +17,11 @@ public class SettingsActivity extends PreferenceActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Loads the XML preferences file.
         addPreferencesFromResource(R.xml.preferences);
     }
+
+    
 
     @Override
     protected void onResume() {
