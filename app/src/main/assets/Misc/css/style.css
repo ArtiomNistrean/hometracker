@@ -1,0 +1,67 @@
+body {
+	text-align: center;
+}
+
+#tagline {
+	font-size: 16px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.star {
+	height: 32px;
+	width: 32px;
+	display: inline-block;
+}
+
+h1 {
+	color: #FF6B35;
+}
+
+h2 {
+	color: #FF6B35;
+}
+
+p {
+	color: #ccc;
+}
+
+#inline {
+	display: inline;
+}
+
+.rating-container, .rating-list, .rateing-list > li {
+	display: inline-block;
+}
+
+.divider {
+	margin-top: 160px;
+}
+
+.background {
+	background-color: #004E89;
+}
+
+.orange-accent {
+	color: #FF6B35;
+}
+
+.gray {
+	margin-top: 25px;
+	color: #ccc;
+}
+
+.sadface {
+	margin: auto;
+	width: 128px;
+	margin-top: 45px;
+	margin-bottom: 35px;
+}
+
+.app_icon {
+	margin: auto;
+}
+
+
