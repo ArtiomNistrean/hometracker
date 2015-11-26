@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/MainMapID"
+        map:uiCompass="true"
         tools:layout="@layout/activity_main" />
 
 

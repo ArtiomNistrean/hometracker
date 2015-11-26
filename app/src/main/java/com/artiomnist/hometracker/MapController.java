@@ -4,16 +4,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Network;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
+import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -73,9 +83,14 @@ public class MapController {
      *
      */
     public void setUpMap() {
-        //map.addMarker(new MarkerOptions().position(new LatLng(0,0)).title("Marker"));
-        setHomeLocation();
-        // Zoom and Stuff
+
+
+        setHomeLocation(); // Adds the Marker
+        setMapStyle(); // Sets the Map Type / Style
+        setBuildings(); // Sets the 3D Buildings on Map
+
+        setZoomLevel();
+
     }
 
     public void refreshMap() {
@@ -86,40 +101,105 @@ public class MapController {
 //    TODO CLEAN THIS THE FUCK UP
     private void setHomeLocation() {
         if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
-            // get the home string
-            String location = model.getHome();
+            if (IsInternetAvailable()) {
+                // get the home string
+                String location = model.getHome();
 
-            if (location.equals("") || location.isEmpty()) {
-                location = "University of Exeter";
-            }
+                if (location.equals("") || location.isEmpty()) {
+                    location = "University of Exeter";
+                }
 
-            List<Address> addressBook = null;
-            try {
-                // get the List<Addresses>
-                addressBook = geocoder.getFromLocationName(location, 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                List<Address> addressBook = null;
+                try {
+                    // get the List<Addresses>
+                    addressBook = geocoder.getFromLocationName(location, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            // Check to see if any address where found.
-            if (addressBook.isEmpty()) {
-                validLocation = false;
-                // Tell user that they have entered an invalid location
+                // Check to see if any address where found.
+                if (addressBook.isEmpty()) {
+                    validLocation = false;
+                    // Tell user that they have entered an invalid location
+                } else {
+                    // Get the First and Only Address
+                    validLocation = true;
 
+                    Address homeLocation = addressBook.get(0);
+
+
+                    // Get the Lat and Long Co-ords
+                    LatLng coords = new LatLng(homeLocation.getLatitude(), homeLocation.getLongitude());
+
+                    // Add the Marker
+                    map.addMarker(new MarkerOptions().position(coords).title("Home"));
+                }
             } else {
-                // Get the First and Only Address
-                validLocation = true;
-                Address homeLocation = addressBook.get(0);
-
-                // Get the Lat and Long Co-ords
-                LatLng coords = new LatLng(homeLocation.getLatitude(), homeLocation.getLongitude());
-
-                // Add the Marker
-                map.addMarker(new MarkerOptions().position(coords).title("Home"));
+                // CONNECTED BUT NO INTERNET ACCESS TODO
             }
         } else {
             // SHOW NE TODO
         }
+    }
+
+    private boolean IsInternetAvailable() {
+//      StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//
+//      StrictMode.setThreadPolicy(policy);
+
+        try {
+            InetAddress ipAddr = new NetTask().execute("www.google.com").get();
+
+            if (ipAddr.equals("")) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private void setZoomLevel() {
+        model.getZoomLevel();
+
+        //CameraPosition cameraPosition = new CameraPosition.Builder()
+        //        .target(new LatLng(40.76793169992044, -73.98180484771729))
+        //        .zoom(17)
+        //        .bearing(90)
+        //        .tilt(30)
+        //        .build();
+
+        //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+    }
+
+    private void setMapStyle() {
+        int mapType;
+
+        switch (model.getMapType()) {
+            case "Normal":
+                mapType = GoogleMap.MAP_TYPE_NORMAL;
+                break;
+            case "Hybrid":
+                mapType = GoogleMap.MAP_TYPE_HYBRID;
+                break;
+            case "Satellite":
+                mapType = GoogleMap.MAP_TYPE_SATELLITE;
+                break;
+            case "Terrain":
+                mapType = GoogleMap.MAP_TYPE_TERRAIN;
+                break;
+            default:
+                mapType = GoogleMap.MAP_TYPE_NORMAL;
+                break;
+        }
+
+        map.setMapType(mapType);
+    }
+
+    private void setBuildings() {
+        map.setBuildingsEnabled(model.getBuildingsEnabled());
     }
 
     public boolean getLocationError() {

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map = mapC.getMapModel().getMap();
 
 
+
         SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
         mf.getMapAsync(this); // calls onMapReady when Loaded
     }
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mobileConnected = false;
         }
     }
+
 
     // TODO
     public void showLocationAlert() {
