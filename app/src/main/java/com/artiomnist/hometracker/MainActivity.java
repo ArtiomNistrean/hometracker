@@ -1,13 +1,17 @@
 package com.artiomnist.hometracker;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,13 +58,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapC = new MapController(this);
         map = mapC.getMapModel().getMap();
 
-        mapC.setUpMapIfNull(this.getSupportFragmentManager()); // Creates the Map + Updates map variable
-        map = mapC.getMapModel().getMap();
-
-
+        mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
+        mapC.getMap().setMyLocationEnabled(true);
 
         SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
         mf.getMapAsync(this); // calls onMapReady when Loaded
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        System.out.println("REQUEST CODE " + requestCode);
+        System.out.println("permissions " + permissions[0]);
+        System.out.println("grantResults " + grantResults[0]);
+        System.out.println("pkgmger " + PackageManager.PERMISSION_GRANTED);
+        if (requestCode == MapController.MY_LOCATION_PERMISSION_REQUEST) {
+            if (permissions.length == 1 &&
+                    permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //
+                System.out.println("Set Location True ACTIVITY");
+            } else {
+                mapC.getMap().setMyLocationEnabled(false);
+                System.out.println("Set Location FALSE ACTIVITY");
+            }
+        }
     }
 
     @Override
@@ -85,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapC.refreshMap();
             refreshDisplay = false;
         } else {
-            mapC.setUpMapIfNull(this.getSupportFragmentManager()); // Creates the Map + Updates map variable
+            mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
             map = mapC.getMapModel().getMap();
         }
         if (!(wifiConnected || mobileConnected)) {
@@ -101,6 +122,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -137,11 +163,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     spinner.setVisibility(View.INVISIBLE);
                 }
                 mapC.refreshMap();
-
-
-
                 return true;
 
+            case R.id.find_home:
+                if (wifiConnected || mobileConnected) {
+                    mapC.setZoomLevel();
+                }
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -156,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapLoaded() {
         ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
         spinner.setVisibility(View.INVISIBLE);
+
     }
 
     /**

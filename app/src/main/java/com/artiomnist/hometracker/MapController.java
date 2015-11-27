@@ -1,7 +1,10 @@
 package com.artiomnist.hometracker;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Network;
@@ -10,7 +13,9 @@ import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -39,6 +44,8 @@ public class MapController {
     private Geocoder geocoder;
     private boolean validLocation;
 
+    public static final int MY_LOCATION_PERMISSION_REQUEST = 1;
+
     public MapController(Context context) {
         model = new MapModel(context);
         geocoder = new Geocoder(context);
@@ -56,17 +63,26 @@ public class MapController {
      *
      * Users may return to the FragmentActivity after the prompt and correctly enabling the Google
      * Play service. The FragmentActivity may not have been entirely destroyed. Therefore, it is
-     * most likely paused or stopped. {@link #setUpMapIfNull(FragmentManager)} ()} Should be called
+     * most likely paused or stopped.  The Method Should be called
      * again to guarantee that a map is created. This is best to call it in the OnResume Method in
      * the corresponding activity.
      *
      * @param fragmentManager requires a FragmentManager to set up the map.
      */
-    public void setUpMapIfNull(FragmentManager fragmentManager) {
+    public void setUpMapIfNull(FragmentManager fragmentManager, Context context) {
 
         if (map == null) {
             // Attempt to get the map.
             map = ((SupportMapFragment) fragmentManager.findFragmentById(R.id.MainMapID)).getMap();
+
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                map.setMyLocationEnabled(true);
+                System.out.println("pkgmger " + PackageManager.PERMISSION_GRANTED);
+                System.out.println("Set Location True CONTROLLER");
+            } else {
+                Activity activity = (Activity) context;
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_LOCATION_PERMISSION_REQUEST);
+            }
 
             // Checking if successful in obtaining the map.
             if (map != null) {
@@ -74,6 +90,7 @@ public class MapController {
             }
         }
     }
+
 
     /**
      * Method adds Markers to the Map.
@@ -85,34 +102,105 @@ public class MapController {
     public void setUpMap() {
 
 
-        setHomeLocation(); // Adds the Marker
         setMapStyle(); // Sets the Map Type / Style
         setBuildings(); // Sets the 3D Buildings on Map
 
-        setZoomLevel();
+        // These Require an active connection
+        if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+            if (isInternetAvailable()) {
+                setHomeLocation(); // Adds the Marker
+                setZoomLevel(); // Sets the Camera!
+
+            }
+        }
+
 
     }
 
     public void refreshMap() {
         map.clear();
-        setUpMap();
+        setMapStyle(); // Sets the Map Type / Style
+        setBuildings(); // Sets the 3D Buildings on Map
+
+        if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+            if (isInternetAvailable()) {
+                setHomeLocation(); // Adds the Marker
+            }
+        }
     }
 
 //    TODO CLEAN THIS THE FUCK UP
     private void setHomeLocation() {
-        if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
-            if (IsInternetAvailable()) {
-                // get the home string
-                String location = model.getHome();
+        //if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+//            if (isInternetAvailable()) {
+//                // get the home string
+//                String location = model.getHome();
+//
+//                if (location.equals("") || location.isEmpty()) {
+//                    location = "University of Exeter";
+//                }
+//
+//                List<Address> addressBook = null;
+//                try {
+//                    // get the List<Addresses>
+//                    addressBook = geocoder.getFromLocationName(location, 1);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // Check to see if any address where found.
+//                if (addressBook.isEmpty()) {
+//                    validLocation = false;
+//                    // Tell user that they have entered an invalid location
+//                } else {
+//                    // Get the First and Only Address
+//                    validLocation = true;
+//
+//                    Address homeLocation = addressBook.get(0);
+//
+//
+//                    // Get the Lat and Long Co-ords
+//                    LatLng coords = getCoOrdinates(homeLocation);
+//
+//                    // Add the Marker
+            LatLng coords = getCoOrdinates(getHomeAddress(model.getHome()));
+            map.addMarker(new MarkerOptions().position(coords).title("Home"));
+                //}
+            //} else {
+                // CONNECTED BUT NO INTERNET ACCESS TODO
+            //}
+        //} else {
+            // SHOW NETWORK ERROR TODO
+        //}
+    }
 
-                if (location.equals("") || location.isEmpty()) {
-                    location = "University of Exeter";
+    private LatLng getCoOrdinates(Address address) {
+        //if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+            //if (isInternetAvailable()) {
+                return (new LatLng(address.getLatitude(), address.getLongitude()));
+            //} else {
+                //return null;
+           // }
+        //} else {
+            //return null;
+        //}
+
+    }
+
+    private Address getHomeAddress(String home) {
+        Address homeLocation = null;
+        //if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+
+            //if (isInternetAvailable()) {
+
+                if (home.isEmpty() || home.equals("")) {
+                    home = "University of Exeter";
                 }
 
                 List<Address> addressBook = null;
                 try {
                     // get the List<Addresses>
-                    addressBook = geocoder.getFromLocationName(location, 1);
+                    addressBook = geocoder.getFromLocationName(home, 1);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -125,27 +213,15 @@ public class MapController {
                     // Get the First and Only Address
                     validLocation = true;
 
-                    Address homeLocation = addressBook.get(0);
+                    homeLocation = addressBook.get(0);
 
-
-                    // Get the Lat and Long Co-ords
-                    LatLng coords = new LatLng(homeLocation.getLatitude(), homeLocation.getLongitude());
-
-                    // Add the Marker
-                    map.addMarker(new MarkerOptions().position(coords).title("Home"));
                 }
-            } else {
-                // CONNECTED BUT NO INTERNET ACCESS TODO
-            }
-        } else {
-            // SHOW NE TODO
-        }
+            //}
+        //}
+        return homeLocation;
     }
 
-    private boolean IsInternetAvailable() {
-//      StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//
-//      StrictMode.setThreadPolicy(policy);
+    private boolean isInternetAvailable() {
 
         try {
             InetAddress ipAddr = new NetTask().execute("www.google.com").get();
@@ -160,17 +236,26 @@ public class MapController {
         }
     }
 
-    private void setZoomLevel() {
-        model.getZoomLevel();
+    public void setZoomLevel() {
+        //if (MainActivity.mobileConnected || MainActivity.wifiConnected) {
+            //if (isInternetAvailable()) {
+                int zoom = model.getZoomLevel();
 
-        //CameraPosition cameraPosition = new CameraPosition.Builder()
-        //        .target(new LatLng(40.76793169992044, -73.98180484771729))
-        //        .zoom(17)
-        //        .bearing(90)
-        //        .tilt(30)
-        //        .build();
+                if (zoom == 1) {
+                    // DYNAMIC ZOOM
+                } else {
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(getCoOrdinates(getHomeAddress(model.getHome())))
+                            .zoom(model.getZoomLevel())
+                            .tilt(30)
+                            .build();
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                    // Set camera
+                }
+            //}
+        //}
 
     }
 
@@ -200,6 +285,10 @@ public class MapController {
 
     private void setBuildings() {
         map.setBuildingsEnabled(model.getBuildingsEnabled());
+    }
+
+    public GoogleMap getMap() {
+        return map;
     }
 
     public boolean getLocationError() {

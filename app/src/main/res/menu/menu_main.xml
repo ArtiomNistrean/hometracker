@@ -20,4 +20,8 @@
         app:showAsAction="ifRoom"
         android:title="@string/action_refresh" />
 
+    <item
+        android:id="@+id/find_home"
+        android:title="@string/action_find_home"
+        android:orderInCategory="200"/>
 </menu>

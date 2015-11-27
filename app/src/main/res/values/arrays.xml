@@ -24,9 +24,9 @@
 
     <string-array name="zoom_levels_values">
         <item name="Dynamic">dynamic</item>
-        <item name="Far">19</item>
+        <item name="Far">6</item>
         <item name="Medium">14</item>
-        <item name="Close">6</item>
+        <item name="Close">19</item>
     </string-array>
 
 </resources>
