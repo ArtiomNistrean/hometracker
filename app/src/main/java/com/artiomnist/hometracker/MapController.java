@@ -114,7 +114,6 @@ public class MapController {
             }
         }
 
-
     }
 
     public void refreshMap() {

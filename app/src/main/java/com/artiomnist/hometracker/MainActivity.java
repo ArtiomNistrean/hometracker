@@ -24,6 +24,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 // TODO REFINE COMMENTS
 
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         mapC = new MapController(this);
-        map = mapC.getMapModel().getMap();
+        map = mapC.getMap();
 
         mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
         mapC.getMap().setMyLocationEnabled(true);
@@ -107,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             refreshDisplay = false;
         } else {
             mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
-            map = mapC.getMapModel().getMap();
+            map = mapC.getMap();
         }
         if (!(wifiConnected || mobileConnected)) {
             showConnectionError();
@@ -185,6 +188,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
         spinner.setVisibility(View.INVISIBLE);
 
+        // TODO
+        LatLng me = new LatLng(map.getMyLocation().getLatitude(), map.getMyLocation().getLongitude());
+        Marker meMarker = map.addMarker(new MarkerOptions().position(me).title("me"));
+        meMarker.setDraggable(true);
+        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                System.out.println("LAT " + marker.getPosition().latitude);
+                System.out.println("LONG " + marker.getPosition().longitude);
+            }
+        });
+
     }
 
     /**
@@ -241,5 +266,4 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         getFragmentManager().beginTransaction().replace(R.id.MainMapID, wvf).addToBackStack("null").commit();
 
     }
-
 }
