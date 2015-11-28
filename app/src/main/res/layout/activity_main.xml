@@ -28,4 +28,31 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Distance"
+        android:id="@+id/distance_view"
+        android:layout_marginBottom="40dp"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:shadowColor="#333333"
+        android:background="@color/accent_opaque"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:padding="10dp"
+        android:textColor="@color/background_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/distance_view_hint"
+        android:id="@+id/distance_view_text"
+        android:layout_above="@+id/distance_view"
+        android:layout_alignLeft="@+id/distance_view"
+        android:layout_alignStart="@+id/distance_view"
+        android:textColor="@color/accent" />
+
+
 </RelativeLayout>

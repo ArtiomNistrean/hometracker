@@ -2,38 +2,40 @@ package com.artiomnist.hometracker;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebViewFragment;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.location.LocationListener;
 
 // TODO REFINE COMMENTS
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private MapController mapC;
     private GoogleMap map;
+    private TextView distanceText;
 
     // Whether there is a Wi-Fi connection.
     public static boolean wifiConnected = false;
@@ -45,11 +47,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // The BroadcastReceiver that tracks network connectivity changes.
     private NetworkReceiver receiver = new NetworkReceiver();
 
+    public static boolean isLocationAvailable;
+
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        distanceText = (TextView)findViewById(R.id.distance_view);
 
         IntentFilter filter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
@@ -62,7 +70,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         map = mapC.getMap();
 
         mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
-        mapC.getMap().setMyLocationEnabled(true);
+        map = mapC.getMap();
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        googleApiClient.connect();
 
         SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
         mf.getMapAsync(this); // calls onMapReady when Loaded
@@ -70,17 +86,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        System.out.println("REQUEST CODE " + requestCode);
-        System.out.println("permissions " + permissions[0]);
-        System.out.println("grantResults " + grantResults[0]);
-        System.out.println("pkgmger " + PackageManager.PERMISSION_GRANTED);
+
         if (requestCode == MapController.MY_LOCATION_PERMISSION_REQUEST) {
             if (permissions.length == 1 &&
-                    permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION &&
+                    permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION) &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //
+                isLocationAvailable = true;
+                mapC.getMap().setMyLocationEnabled(true);
+                googleApiClient.connect();
+
                 System.out.println("Set Location True ACTIVITY");
             } else {
+                isLocationAvailable = false;
                 mapC.getMap().setMyLocationEnabled(false);
                 System.out.println("Set Location FALSE ACTIVITY");
             }
@@ -91,6 +108,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onStart() {
         super.onStart();
         updateConnectedFlags();
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
     }
 
     @Override
@@ -102,11 +126,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        System.out.println("WE PAUSED POYS");
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateConnectedFlags();
+        googleApiClient.connect();
         if (refreshDisplay) {
             mapC.refreshMap();
+            map = mapC.getMap();
             refreshDisplay = false;
         } else {
             mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
@@ -117,7 +149,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else if (!mapC.getLocationError()) {
             showLocationAlert();
         }
+        System.out.println("RESUMED!!");
+
     }
+
+    // TODO CLEAN UP the connectins
 
 
     @Override
@@ -166,6 +202,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     spinner.setVisibility(View.INVISIBLE);
                 }
                 mapC.refreshMap();
+                Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                mapC.setCurrentLocation(location);
+                mapC.setUpDistanceCounter(distanceText, location);
                 return true;
 
             case R.id.find_home:
@@ -186,29 +225,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapLoaded() {
         ProgressBar spinner = (ProgressBar)findViewById(R.id.map_progressBar);
+
+        TextView distanceText_hint = (TextView)findViewById(R.id.distance_view_text);
+
         spinner.setVisibility(View.INVISIBLE);
 
-        // TODO
-        LatLng me = new LatLng(map.getMyLocation().getLatitude(), map.getMyLocation().getLongitude());
-        Marker meMarker = map.addMarker(new MarkerOptions().position(me).title("me"));
-        meMarker.setDraggable(true);
-        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
+        if (isLocationAvailable) {
+            //map.setMyLocationEnabled(true);
+            //mapC.setCurrentLocation(); // Sets current Location
+            //mapC.setUpDistanceCounter(distanceText);
+        } else {
+            // TOAST TODO
+            System.out.println("So this Happened?!");
+        }
 
-            }
 
-            @Override
-            public void onMarkerDrag(Marker marker) {
 
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                System.out.println("LAT " + marker.getPosition().latitude);
-                System.out.println("LONG " + marker.getPosition().longitude);
-            }
-        });
+        distanceText.setVisibility(View.VISIBLE);
+        distanceText_hint.setVisibility(View.VISIBLE);
 
     }
 
@@ -243,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // TODO
     public void showLocationAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("ERROR MESAGE").setTitle("ERROR TITIES");
+        builder.setMessage("Please").setTitle("ERROR TITIES");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // TODO OR SECOND DIALOG?>
@@ -262,8 +296,49 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showConnectionError() {
 
         getFragmentManager().popBackStack();
+        TextView distanceText = (TextView)findViewById(R.id.distance_view);
+        distanceText.setVisibility(View.INVISIBLE);
+        TextView distanceText_hint = (TextView)findViewById(R.id.distance_view_text);
+        distanceText_hint.setVisibility(View.INVISIBLE);
         WebViewFragment wvf = ConnectionErrorFragment.newInstance("file:///android_asset/Misc/error-connection.html");
         getFragmentManager().beginTransaction().replace(R.id.MainMapID, wvf).addToBackStack("null").commit();
 
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        System.out.println("CONNECTED!");
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000); // 5 Seconds
+        if (isLocationAvailable) {
+            System.out.println("CONNECTED! AND SETTING");
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+            System.out.println("CONNECTED! ADN SET");
+        } else {
+            // NEED PERMISSIONS.
+            System.out.println("FAILED TO CONNECT PERMISSIONS!");
+            googleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        // Connection to API has been Suspended
+        System.out.println("FAILED TO CONNECT SUSPEDED!");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        // Send location.
+        mapC.setCurrentLocation(location);
+        mapC.setUpDistanceCounter(distanceText, location);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        // Connection has failed!
+        // Toast TODO
+        System.out.println("FAILED TO CONNECT");
     }
 }

@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Objects;
 
 /**
  * Created on 25/11/2015.
@@ -31,8 +34,8 @@ public class MapModel {
     public Integer getZoomLevel() {
         String zoom = shPreferences.getString("zoom_level", "14");
 
-        if (zoom == "dynamic") {
-            return 1;
+        if (zoom.equals("dynamic")) {
+            return 12;
         } else {
             return Integer.parseInt(zoom);
         }
@@ -40,7 +43,7 @@ public class MapModel {
     }
 
     public String getMapType() {
-        return shPreferences.getString("map_type" , "Normal");
+        return shPreferences.getString("map_type", "Normal");
     }
 
     public boolean getBuildingsEnabled() {

@@ -56,5 +56,6 @@ public class SettingsActivity extends PreferenceActivity
             editor.commit();
         }
         MainActivity.refreshDisplay = true;
+
     }
 }

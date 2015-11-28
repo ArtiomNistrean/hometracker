@@ -6,4 +6,5 @@
     <string name="action_find_home">Find Home</string>
     <string name="reconnected">Reconnected</string>
     <string name="lost_connection">Connection Lost</string>
+    <string name="distance_view_hint">Distance to Home:</string>
 </resources>

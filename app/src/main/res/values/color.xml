@@ -7,6 +7,7 @@
     <color name="primary">#1A659E</color>
     <color name="primary_dark">#004E89</color>
     <color name="accent">#FF6B35</color>
+    <color name="accent_opaque">#ccFF6B35</color>
     <color name="background_light">#DDE2DC</color>
     <color name="background_dark">#003E99</color>
     <color name="text_dark">#323331</color>
