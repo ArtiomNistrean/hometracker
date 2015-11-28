@@ -202,9 +202,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     spinner.setVisibility(View.INVISIBLE);
                 }
                 mapC.refreshMap();
-                Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                mapC.setCurrentLocation(location);
-                mapC.setUpDistanceCounter(distanceText, location);
+                if (isLocationAvailable && (wifiConnected || mobileConnected)) {
+                    Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    if (location != null) {
+                        mapC.setCurrentLocation(location);
+                        mapC.setUpDistanceCounter(distanceText, location);
+                    }
+                }
+
                 return true;
 
             case R.id.find_home:
@@ -331,8 +336,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onLocationChanged(Location location) {
         // Send location.
-        mapC.setCurrentLocation(location);
-        mapC.setUpDistanceCounter(distanceText, location);
+        if (location != null) {
+            mapC.setCurrentLocation(location);
+            mapC.setUpDistanceCounter(distanceText, location);
+        }
     }
 
     @Override

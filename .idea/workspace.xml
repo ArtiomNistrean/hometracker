@@ -22,18 +22,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="646dce76-0897-406a-be30-8a2f1ececb41" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/startscreen.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapModel.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/SettingsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/SettingsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/color.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/color.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HomeTracker.iws" />
@@ -64,39 +58,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.75581396">
+              <caret line="207" column="24" selection-start-line="207" selection-start-column="24" selection-end-line="207" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8788#8789#0" expanded="true" />
-                <element signature="e#8836#8837#0" expanded="true" />
-                <element signature="e#9746#10063#0" expanded="true" />
-                <element signature="e#10062#10063#0" expanded="true" />
-                <element signature="e#10112#10286#0" expanded="true" />
-                <element signature="e#10285#10286#0" expanded="true" />
+                <element signature="e#8974#8975#0" expanded="true" />
+                <element signature="e#9022#9023#0" expanded="true" />
+                <element signature="e#9932#10249#0" expanded="true" />
+                <element signature="e#10248#10249#0" expanded="true" />
+                <element signature="e#10298#10472#0" expanded="true" />
+                <element signature="e#10471#10472#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MapController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MapController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.06947891">
-              <caret line="117" column="20" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
+            <state vertical-scroll-proportion="-1.5925926">
+              <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10683#10684#0" expanded="true" />
-                <element signature="e#10751#10752#0" expanded="true" />
-                <element signature="e#10784#10785#0" expanded="true" />
-                <element signature="e#10810#10811#0" expanded="true" />
-                <element signature="e#10851#10852#0" expanded="true" />
-                <element signature="e#10887#10888#0" expanded="true" />
-                <element signature="e#10924#10925#0" expanded="true" />
-                <element signature="e#10952#10953#0" expanded="true" />
+                <element signature="e#10763#10764#0" expanded="true" />
+                <element signature="e#10831#10832#0" expanded="true" />
+                <element signature="e#10864#10865#0" expanded="true" />
+                <element signature="e#10890#10891#0" expanded="true" />
+                <element signature="e#10931#10932#0" expanded="true" />
+                <element signature="e#10967#10968#0" expanded="true" />
+                <element signature="e#11004#11005#0" expanded="true" />
+                <element signature="e#11032#11033#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1935,9 +1929,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/color.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/SettingsActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2467,7 +2461,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329429" sideWeight="0.497114" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329429" sideWeight="0.497114" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963924" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -2693,36 +2687,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="43" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="43" />
+        <state vertical-scroll-proportion="-1.5925926">
+          <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8788#8789#0" expanded="true" />
-            <element signature="e#8836#8837#0" expanded="true" />
-            <element signature="e#9746#10063#0" expanded="true" />
-            <element signature="e#10062#10063#0" expanded="true" />
-            <element signature="e#10112#10286#0" expanded="true" />
-            <element signature="e#10285#10286#0" expanded="true" />
+            <element signature="e#10763#10764#0" expanded="true" />
+            <element signature="e#10831#10832#0" expanded="true" />
+            <element signature="e#10864#10865#0" expanded="true" />
+            <element signature="e#10890#10891#0" expanded="true" />
+            <element signature="e#10931#10932#0" expanded="true" />
+            <element signature="e#10967#10968#0" expanded="true" />
+            <element signature="e#11004#11005#0" expanded="true" />
+            <element signature="e#11032#11033#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06947891">
-          <caret line="117" column="20" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.75581396">
+          <caret line="207" column="24" selection-start-line="207" selection-start-column="24" selection-end-line="207" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10683#10684#0" expanded="true" />
-            <element signature="e#10751#10752#0" expanded="true" />
-            <element signature="e#10784#10785#0" expanded="true" />
-            <element signature="e#10810#10811#0" expanded="true" />
-            <element signature="e#10851#10852#0" expanded="true" />
-            <element signature="e#10887#10888#0" expanded="true" />
-            <element signature="e#10924#10925#0" expanded="true" />
-            <element signature="e#10952#10953#0" expanded="true" />
+            <element signature="e#8974#8975#0" expanded="true" />
+            <element signature="e#9022#9023#0" expanded="true" />
+            <element signature="e#9932#10249#0" expanded="true" />
+            <element signature="e#10248#10249#0" expanded="true" />
+            <element signature="e#10298#10472#0" expanded="true" />
+            <element signature="e#10471#10472#0" expanded="true" />
           </folding>
         </state>
       </provider>

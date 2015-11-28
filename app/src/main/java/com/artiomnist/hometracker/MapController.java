@@ -129,9 +129,10 @@ public class MapController {
     public void setCurrentLocation(Location currentLocation) {
 
         if (meMarker != null) {meMarker.remove();}
-
-        LatLng me = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        meMarker = map.addMarker(new MarkerOptions().position(me).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title("me"));
+        if (currentLocation != null) {
+            LatLng me = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            meMarker = map.addMarker(new MarkerOptions().position(me).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)).title("me"));
+        }
 
     }
 
@@ -196,7 +197,7 @@ public class MapController {
             return coordinates;
         } catch (Exception e) {
             System.out.println("Something Went Wrong... Trying Again");
-            return getCoOrdinates(address);
+            return getCoOrdinates(getHomeAddress(model.getHome()));
         }
 
     }
