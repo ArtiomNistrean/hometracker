@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapController mapC;
     private GoogleMap map;
     private TextView distanceText;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
 
     // Whether there is a Wi-Fi connection.
     public static boolean wifiConnected = false;
@@ -47,63 +49,88 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // The BroadcastReceiver that tracks network connectivity changes.
     private NetworkReceiver receiver = new NetworkReceiver();
 
+    // Whether there is Location Services available.
     public static boolean isLocationAvailable;
-
-    private GoogleApiClient googleApiClient;
-    private LocationRequest locationRequest;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        distanceText = (TextView)findViewById(R.id.distance_view);
 
+        // Set up the Network Receiver.
         IntentFilter filter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
         this.registerReceiver(receiver, filter);
-
         updateConnectedFlags();
 
+        // Get the Distance Text.
+        distanceText = (TextView)findViewById(R.id.distance_view);
 
+        // Create an Instance of the Controller
         mapC = new MapController(this);
         map = mapC.getMap();
 
+        // Set up the Map.
         mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
         map = mapC.getMap();
 
+        // Google API CLient for Finding Current Location.
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        googleApiClient.connect();
-
+        // Create the Map.
         SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
         mf.getMapAsync(this); // calls onMapReady when Loaded
     }
 
+
+    /**
+     * Method Listens for the input from the user for the Permission Request. There is only one
+     * permission request, that is, for location services. This method is used in synergy with
+     * setUpIfNull method in the {@link MapController} class. If the requestCode is the same as the
+     * Location RequestCode, The result can be investigated. If the permission for
+     * ACCESS_FINE_LOCATION matches the permissions argument and the grantResult is the same as
+     * PERMISSION_GRANTED for this package then it means th user has given access for their Location
+     *
+     * Therefore, the isLocationAvailable is set to True to resemble this and the Maps location is
+     * enabled. An attempt to connect to the Google API Client is also made. Otherwise, If
+     * permission is denied, then isLocationAvailable and the maps Location is set to False. Thus,
+     * disabling the user location functionality.
+     *
+     * @param requestCode Request Code given.
+     * @param permissions The Permissions to be requested.
+     * @param grantResults The results that are given on granted access.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
+        // Check Result of the Permission Request on Runtime
         if (requestCode == MapController.MY_LOCATION_PERMISSION_REQUEST) {
             if (permissions.length == 1 &&
                     permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION) &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                // Access has been Granted!
                 isLocationAvailable = true;
                 mapC.getMap().setMyLocationEnabled(true);
                 googleApiClient.connect();
 
-                System.out.println("Set Location True ACTIVITY");
             } else {
+                // Access has been denied, Disable Location functionality.
                 isLocationAvailable = false;
                 mapC.getMap().setMyLocationEnabled(false);
-                System.out.println("Set Location FALSE ACTIVITY");
             }
         }
     }
 
+    /**
+     * Method checks the connection status, updating the connection flags as necessary and attempts
+     * a connection to the Google API Client.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -111,12 +138,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleApiClient.connect();
     }
 
+    /**
+     * Method disconnects the Google API client before Stopping.
+     */
     @Override
     public void onStop() {
         googleApiClient.disconnect();
         super.onStop();
     }
 
+    /**
+     * Method unregisters the Network Status Receiver if one has been created when the Application
+     * is destroyed and exited.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -125,35 +159,53 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    /**
+     * Method indicates the application is paused.
+     */
     @Override
     public void onPause(){
         super.onPause();
-        System.out.println("WE PAUSED POYS");
     }
 
+    /**
+     * Method to deal with the application being resumed. Firstly, the connection status is updated,
+     * and the a connection to the Google API Client is created. If there is a need to refresh the
+     * display, the the map is refreshed through the controller method {@see refreshMap}. Otherwise,
+     * The Map is created if needed. This is done through the controller method {@see setUpMapIfNull}
+     *
+     * This is the case when the application starts with no Internet Connection but then gets an
+     * internet connection. However, the application must also consider the opposite, if it started
+     * with an internet connection, but has then lost the connection. The method then checks if it
+     * is not connected to any network, and this displays an error page {@see showConnectionError}.
+     * However, If there is an internet connection, but the location of home is not valid then an
+     * appropriate error message is displayed. {@see showLocationalert}
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
         updateConnectedFlags();
         googleApiClient.connect();
+
         if (refreshDisplay) {
+            // Refresh the Map
             mapC.refreshMap();
             map = mapC.getMap();
             refreshDisplay = false;
         } else {
+            // Set up the map if needed.
             mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
             map = mapC.getMap();
         }
+
         if (!(wifiConnected || mobileConnected)) {
+            // No network connection.
             showConnectionError();
         } else if (!mapC.getLocationError()) {
+            // Connected to network, but the location is invalid
             showLocationAlert();
         }
-        System.out.println("RESUMED!!");
-
     }
-
-    // TODO CLEAN UP the connectins
 
 
     @Override
@@ -167,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
