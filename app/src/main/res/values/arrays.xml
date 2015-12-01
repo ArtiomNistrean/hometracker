@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Map Type String List -->
     <string-array name="map_types">
         <item name="Normal">Default</item>
         <item name="Hybrid">Default + Satellite</item>
@@ -15,6 +16,7 @@
         <item name="Terrain">Terrain</item>
     </string-array>
 
+    <!-- Zoom Type String List -->
     <string-array name="zoom_levels">
         <item name="Dynamic">Dynamic</item>
         <item name="Far">Far Away</item>

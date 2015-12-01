@@ -2,6 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Preference for setting the Home Location -->
     <EditTextPreference
         android:key="home_address"
         android:title="Home Location"
@@ -9,8 +10,8 @@
         android:dialogTitle="Home Location"
         android:dialogMessage="Set a home location. This can be An Address, Postcode or a Location. E.g. The Kremlin, Or EX4 4QJ"
         android:defaultValue="University of Exeter" />
-    <!-- TODO Make defaultValue null and introduce initial Screen -->
 
+    <!-- Preference for changing the Map Style -->
     <ListPreference
         android:key="map_type"
         android:title="Map Style"
@@ -19,6 +20,7 @@
         android:entries="@array/map_types"
         android:entryValues="@array/map_types_values" />
 
+    <!-- Preference for changing Zoom level / Zoom type -->
     <ListPreference
         android:key="zoom_level"
         android:title="Zoom Level"
@@ -27,6 +29,7 @@
         android:entries="@array/zoom_levels"
         android:entryValues="@array/zoom_levels_values" />
 
+    <!-- Preference for Enabling / Disabling 3D Buildings on the Map -->
     <CheckBoxPreference
         android:key="enable_buildings"
         android:title="Enable Buildings"

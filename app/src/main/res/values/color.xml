@@ -2,8 +2,6 @@
 <resources>
     <!-- This File defines the Colour Scheme for the Application -->
 
-    <!-- TODO -->
-
     <color name="primary">#1A659E</color>
     <color name="primary_dark">#004E89</color>
     <color name="accent">#FF6B35</color>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Contains the Googles Maps android API Key -->
+    <!-- Contains the Google Maps android API Key -->
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
         AIzaSyAq4O1hrnqGHHsv0P2TIEDh4x5zgnTMd-0
     </string>

@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (mapC.getHomeLocationLocation() != null) {
                         mapC.setZoomLevel();
                     } else {
-                        // Home has not beed added to the Map
+                        // Home has not been added to the Map
                         Toast.makeText(this, R.string.home_not_set, Toast.LENGTH_SHORT).show();
                     }
                 }
