@@ -7,7 +7,12 @@ import android.view.ViewGroup;
 import android.webkit.WebViewFragment;
 
 /**
- * Created by artiomNistrean on 25/11/2015.
+ * Created on 25/11/2015.
+ * @author www.artiomnist.com
+ *
+ * This class extends a WebViewFragment and is used to display an Connection Error Message in HTML
+ * format. This is used in the {@link MainActivity} when the activity detects no network connection.
+ *
  */
 public class ConnectionErrorFragment extends WebViewFragment {
 
@@ -33,9 +38,6 @@ public class ConnectionErrorFragment extends WebViewFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = super.onCreateView(inflater, container, savedInstanceState);
 
-        getWebView().getSettings().setJavaScriptEnabled(true);
-        getWebView().getSettings().setSupportZoom(true);
-        getWebView().getSettings().setBuiltInZoomControls(false);
         getWebView().loadUrl(getErrorFile());
 
         return(result);
