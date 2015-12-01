@@ -16,6 +16,6 @@
 
     <!-- Error Strings -->
     <string name="home_not_set">Home not found</string>
-    <string name="location_error_message">We couldn't find where home is. Please enter a valid location for Home.</string>
+    <string name="location_error_message">We could not find where home is. Please enter a valid location for Home.</string>
     <string name="location_error">Invalid Location</string>
 </resources>
