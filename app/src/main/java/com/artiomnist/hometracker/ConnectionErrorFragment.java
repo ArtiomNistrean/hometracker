@@ -11,18 +11,19 @@ import android.webkit.WebViewFragment;
  * @author www.artiomnist.com
  *
  * This class extends a WebViewFragment and is used to display an Connection Error Message in HTML
- * format. This is used in the {@link MainActivity} when the activity detects no network connection.
+ * format. This is used in the {@link MainActivity} when the activity doesn't detects any
+ * network connection.
  *
  */
 public class ConnectionErrorFragment extends WebViewFragment {
 
-    private static final String CONNTECTION_ERROR = "file";
+    private static final String CONNECTION_ERROR = "file";
 
     protected static ConnectionErrorFragment newInstance(String file) {
         ConnectionErrorFragment fragment = new ConnectionErrorFragment();
 
         Bundle args = new Bundle();
-        args.putString(CONNTECTION_ERROR, file);
+        args.putString(CONNECTION_ERROR, file);
         fragment.setArguments(args);
 
         return (fragment);
@@ -44,7 +45,7 @@ public class ConnectionErrorFragment extends WebViewFragment {
     }
 
     private String getErrorFile() {
-        return(getArguments().getString(CONNTECTION_ERROR));
+        return(getArguments().getString(CONNECTION_ERROR));
     }
 
 }

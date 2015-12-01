@@ -22,12 +22,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="646dce76-0897-406a-be30-8a2f1ececb41" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutContentFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutContentFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetworkReceiver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetworkReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/SettingsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/SettingsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java" />
     </list>
     <ignored path="HomeTracker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -78,13 +74,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MapController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MapController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="188.88889">
-              <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.2601156">
+              <caret line="15" column="45" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="e#19589#19590#0" expanded="true" />
                 <element signature="e#19657#19658#0" expanded="true" />
                 <element signature="e#19831#19832#0" expanded="true" />
@@ -112,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -132,21 +127,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AboutActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AboutActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20373514">
-              <caret line="10" column="47" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -182,7 +167,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+              <caret line="22" column="97" selection-start-line="22" selection-start-column="97" selection-end-line="22" selection-end-column="97" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1944,13 +1929,13 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetworkReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/SettingsActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutContentFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java" />
       </list>
     </option>
   </component>
@@ -2390,7 +2375,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32934782" sideWeight="0.497114" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.497114" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20428894" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -2449,7 +2434,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="e#19589#19590#0" expanded="true" />
             <element signature="e#19657#19658#0" expanded="true" />
             <element signature="e#19831#19832#0" expanded="true" />
@@ -2618,32 +2602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="188.88889">
-          <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#19589#19590#0" expanded="true" />
-            <element signature="e#19657#19658#0" expanded="true" />
-            <element signature="e#19831#19832#0" expanded="true" />
-            <element signature="e#19857#19858#0" expanded="true" />
-            <element signature="e#20108#20109#0" expanded="true" />
-            <element signature="e#20144#20145#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-32.22222">
@@ -2703,13 +2661,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2723,11 +2679,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/AboutActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/ConnectionErrorFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20373514">
-          <caret line="10" column="47" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/NetTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="97" selection-start-line="22" selection-start-column="97" selection-end-line="22" selection-end-column="97" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/artiomnist/hometracker/MapController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2601156">
+          <caret line="15" column="45" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+          <folding>
+            <element signature="e#19589#19590#0" expanded="true" />
+            <element signature="e#19657#19658#0" expanded="true" />
+            <element signature="e#19831#19832#0" expanded="true" />
+            <element signature="e#19857#19858#0" expanded="true" />
+            <element signature="e#20108#20109#0" expanded="true" />
+            <element signature="e#20144#20145#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
