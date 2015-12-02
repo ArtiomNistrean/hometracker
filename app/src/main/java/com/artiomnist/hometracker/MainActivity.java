@@ -211,7 +211,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             refreshDisplay = false;
         } else {
             // Set up the map if needed.
-            mapC.setUpMapIfNull(this.getSupportFragmentManager(), this); // Creates the Map + Updates map variable
+            // Creates the Map + Updates map variable
+            mapC.setUpMapIfNull(this.getSupportFragmentManager(), this);
             map = mapC.getMap();
         }
 
@@ -290,7 +291,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     spinner.setVisibility(View.VISIBLE);
                     getFragmentManager().popBackStack(); // Remove Any error that are shown
                     // Set up the Map
-                    SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.MainMapID);
+                    SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.MainMapID);
                     mf.getMapAsync(this);
                 } else {
                     spinner.setVisibility(View.VISIBLE);
@@ -300,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 mapC.refreshMap(); // Refresh
 
-                // Can only be done if Location Permissions are avaiable and Connected to a network
+                // Can only be done if Location Permissions are available and Connected to a network
                 if (isLocationAvailable && (wifiConnected || mobileConnected)) {
                     Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
                     // Make sure location is not null before we display it.
